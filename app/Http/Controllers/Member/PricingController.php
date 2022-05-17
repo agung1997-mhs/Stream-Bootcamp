@@ -10,6 +10,12 @@ class PricingController extends Controller
 {
     public function index()
     {
-        return view('member.pricing');
+        $standarPackage = Package::where('name', 'standard')->first();
+        $goldPackage = Package::where('name', 'gold')->first();
+
+        return view('member.pricing', [
+            'standard' => $standarPackage,
+            'gold' => $goldPackage
+        ]);
     }
 }

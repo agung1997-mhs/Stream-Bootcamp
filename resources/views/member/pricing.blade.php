@@ -41,30 +41,13 @@
             <img src="{{ asset('stream/assets/images/pricing_ornament.svg') }}" class="h-screen w-screen" alt="stream" />
         </span>
         <!-- ./ -->
-
+        
         <div class="col-span-12 col-start-1 lg:col-start-2 xl:col-start-4">
             <div class="px-5 lg:px-[60px] pt-[30px] relative">
                 <!-- Logo & User Avatar -->
-                <div class=" flex flex-row justify-between items-center relative">
-                    <a href="/index.html" class="block">
-                        <img src="{{ asset('stream/assets/images/stream.svg') }}" alt="stream" />
-                    </a>
-
-                    <!-- user avatar -->
-                    <div class="collapsible-dropdown flex flex-col gap-2 relative">
-                        <a href="#!"
-                            class="outline outline-2 outline-stream-gray p-[6px] rounded-full w-[60px] dropdown-button"
-                            data-target="#dropdown-stream">
-                            <img src="{{ asset('stream/assets/images/photo.png') }}" class="rounded-full object-cover w-full" alt="stream" />
-                        </a>
-                        <div class="bg-white rounded-2xl text-stream-dark font-medium flex flex-col gap-1 absolute z-[999] right-0 top-[80px] min-w-[180px] hidden overflow-hidden"
-                            id="dropdown-stream">
-                            <a href="dashboard.html" class="transition-all hover:bg-sky-100 p-4">Watch</a>
-                            <a href="#!" class="transition-all hover:bg-sky-100 p-4">Settings</a>
-                            <a href="sign_in.html" class="transition-all hover:bg-sky-100 p-4">Sign Out</a>
-                        </div>
-                    </div>
-                </div>
+                @if(Auth::user())
+                    @include('member.layouts.navbar')   
+                @endif
 
                 <div class="pt-[85px] flex flex-col items-center gap-5">
                     <p class="text-sky-300 text-base font-semibold">
@@ -79,10 +62,10 @@
                         <!-- Card -->
                         <div class="pricing-card">
                             <p class="text-stream-dark font-medium text-base">
-                                Standard
+                                {{ ucwords($standard->name) }}
                             </p>
                             <div class="text-3xl text-stream-dark font-semibold my-1">
-                                Rp 380.000
+                                Rp {{ number_format($standard->price) }}
                             </div>
                             <p class="text-sm text-stream-gray">
                                 /bulan
@@ -94,7 +77,7 @@
                                 <!-- benefits -->
                                 <div class="flex items-center justify-between gap-3">
                                     <span class="li-benefits">
-                                        2 Users Limits
+                                        {{ $standard->max_users }} Users Limits
                                     </span>
                                     <img src="{{ asset('stream/assets/images/ic_check.svg') }}" alt="stream" />
                                 </div>
@@ -110,7 +93,7 @@
                                     <span class="li-benefits">
                                         TV & Laptop Streaming
                                     </span>
-                                    <img src="{{ asset('assets/images/ic_check.svg') }}" alt="stream" />
+                                    <img src="{{ asset('stream/assets/images/ic_check.svg') }}" alt="stream" />
                                 </div>
                                 <!-- benefits -->
                                 <div class="flex items-center justify-between gap-3">
@@ -128,21 +111,25 @@
                                 </div>
                             </div>
 
-                            <a href="success_page.html"
-                                class="mt-10 py-3 block outline outline-1 outline-stream-gray rounded-full text-center">
-                                <span class="text-stream-gray text-base font-normal">
-                                    Subscribe
-                                    Now
-                                </span>
-                            </a>
+                            <form action="{{ route('member.transaction.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="package_id" value="{{ $standard->id }}">
+                                <button type="submit" class="mt-10 py-3 block outline outline-1 outline-stream-gray rounded-full text-center">
+                                    <span class="text-stream-gray text-base font-normal">
+                                        Subscribe
+                                        Now
+                                    </span>  
+                                </button>
+                                </class=>
+                            </form>
                         </div>
                         <!-- Card -->
                         <div class="pricing-card">
                             <p class="text-stream-dark font-medium text-base">
-                                Gold
+                                {{ ucwords($gold->name) }}
                             </p>
                             <div class="text-3xl text-stream-dark font-semibold my-1">
-                                Rp 699.000
+                                Rp {{ number_format($gold->price) }}
                             </div>
                             <p class="text-sm text-stream-gray">
                                 /bulan
@@ -154,7 +141,7 @@
                                 <!-- benefits -->
                                 <div class="flex items-center justify-between gap-3">
                                     <span class="li-benefits">
-                                        7 Users Limits
+                                        {{ $gold->max_users }} Users Limits
                                     </span>
                                     <img src="{{ asset('stream/assets/images/ic_check.svg') }}" alt="stream" />
                                 </div>
@@ -188,12 +175,16 @@
                                 </div>
                             </div>
 
-                            <a href="success_page.html" class="mt-10 py-3 block bg-indigo-600 rounded-full text-center">
-                                <span class="text-white text-base font-semibold">
-                                    Subscribe
-                                    Now
-                                </span>
-                            </a>
+                            <form action="{{ route('member.transaction.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="package_id" value="{{ $gold->id }}">
+                                <button type="submit" class="mt-10 py-3 block bg-indigo-600 rounded-full text-center">
+                                   <span class="text-white text-base font-semibold">
+                                       Subscribe
+                                       Now
+                                   </span>  
+                               </button>
+                            </form>
                         </div>
                     </div>
                 </div>
