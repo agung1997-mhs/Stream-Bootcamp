@@ -14,4 +14,9 @@ class UserPremium extends Model
     protected $fillable = [
         'package_id', 'user_id', 'end_of_subscription'
     ];
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class, 'package_id', 'id'); // foreign key | primary key dari table yg di tuju
+    }
 }

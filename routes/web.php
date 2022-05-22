@@ -1,20 +1,21 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
+use App\Models\Movie;
+use Faker\Guesser\Name;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\MovieController;
-use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\Member\DashboardController as MemberDashboardController;
-use App\Http\Controllers\Member\MovieController as MemberMovieController;
-use App\Http\Controllers\Member\RegisterController;
-use App\Http\Controllers\Member\LoginController as MemberLoginController;
-use App\Http\Controllers\Member\TransactionController as MemberTransactionController;
-use App\Http\Controllers\Member\WebHookController;
 use App\Http\Controllers\Member\PricingController;
-use App\Models\Movie;
-use App\Models\Transaction;
-use Faker\Guesser\Name;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Member\WebHookController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Member\RegisterController;
+use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Member\UserPremiumController;
+use App\Http\Controllers\Member\LoginController as MemberLoginController;
+use App\Http\Controllers\Member\MovieController as MemberMovieController;
+use App\Http\Controllers\Member\DashboardController as MemberDashboardController;
+use App\Http\Controllers\Member\TransactionController as MemberTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,9 @@ Route::group(['prefix' => 'member', 'middleware' => ['auth']], function () {
     Route::get('movie/{id}/watch', [MemberMovieController::class, 'watch'])->name('member.movie.watch');
 
     Route::post('transaction', [MemberTransactionController::class, 'store'])->name('member.transaction.store');
+
+    Route::get('subscription', [UserPremiumController::class, 'index'])->name('member.user_premium.index');
+    Route::delete('subscription/{id}', [UserPremiumController::class, 'destroy'])->name('member.user_premium.destroy');
 });
 
 
