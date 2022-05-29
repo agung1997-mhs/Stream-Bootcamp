@@ -10,6 +10,29 @@
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
     </style>
+
+    <style>
+        .video-container {
+            overflow: hidden;
+            position: relative;
+            width:100%;
+        }
+
+        .video-container::after {
+            padding-top: 56.25%;
+            display: block;
+            content: '';
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script src="{{ asset('stream/assets/script/tailwind-config.js') }}"></script>
@@ -21,14 +44,17 @@
 <body>
 
     <section class="mx-auto w-screen relative watching-page font-poppins" id="stream">
-        <video-js id="stream-video" class="overflow-hidden h-screen w-screen">
-            <source src="https://youtu.be/i93F2p43q-k" type="video/mp4" />
+        <div class="video-container">
+            <iframe src="{{ $movie->movie }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <!-- <video-js id="stream-video" class="overflow-hidden h-screen w-screen">
+            <source src="{{ $movie->movie }}" type="video/mp4" />
             <p class="vjs-no-js text-twmdark">
                 To view this video please enable JavaScript, and consider upgrading to a
                 web browser that
                 <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
             </p>
-        </video-js>
+        </video-js> -->
 
         <!-- Button back to dashboard -->
         <div class="absolute top-5 left-5 z-20">

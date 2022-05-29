@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers\Member;
 
+use Carbon\Carbon;
+use App\Models\Movie;
+use App\Models\UserPremium;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\UserPremium;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class MovieController extends Controller
 {
     public function show($id)
     {
-        return view('member.movie-detail');
+        $movie = Movie::findOrFail($id);
+
+        return view('member.movie-detail', [
+            'movie' => $movie
+        ]);
     }
 
     public function watch($id)
@@ -27,7 +32,11 @@ class MovieController extends Controller
 
             $isValidSubscription = $date->greaterThan(now()); // cek .. apakah tanggal di database lebih besar dari tanggal sekarang ? jika iya : false
             if($isValidSubscription) {
-                return view('member.movie-watching');
+                $movie = Movie::findOrFail($id);
+
+                return view('member.movie-watching', [
+                    'movie' => $movie
+                ]);
             }
         }
 
