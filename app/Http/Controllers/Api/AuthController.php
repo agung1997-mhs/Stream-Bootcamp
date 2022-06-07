@@ -32,7 +32,7 @@ class AuthController extends Controller
             if ($isValidPassword) {
                 $token = $this->generateToken($user);
                 return response()->json([
-                    'token' => $token
+                    'token' => $token 
                 ]);
             }
         }
