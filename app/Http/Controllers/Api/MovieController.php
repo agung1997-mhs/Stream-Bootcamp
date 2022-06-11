@@ -6,6 +6,7 @@ use App\Models\Movie;
 use App\Models\UserPremium;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Controller;
 
 class MovieController extends Controller
@@ -28,7 +29,15 @@ class MovieController extends Controller
 
         $userPremium = UserPremium::where('user_id', $user->id)->first();
       
-        $movie = Movie::findOrFail($id);
+        $movie = Redis::get('movie-'.$id);
+
+        if(!$movie) { 
+            $movie = Movie::findOrFail($id);
+            Redis::set('movie-'.$id, $movie);
+        } else {
+            $movie = json_decode($movie);
+        }
+
 
         if(!$movie) {
              return response()->json([

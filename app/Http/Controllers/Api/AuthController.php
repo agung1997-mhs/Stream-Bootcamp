@@ -53,6 +53,7 @@ class AuthController extends Controller
             'iss' => 'stream.id',
             'nbf' => $now,
             'exp' => $expired,
+            'user' => $user
         ];
 
         $token = JWT::encode($payload, $jwtKey, 'HS256');
